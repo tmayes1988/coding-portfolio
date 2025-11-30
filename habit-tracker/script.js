@@ -9,6 +9,29 @@ const today = new Date().toISOString().slice(0, 10); // e.g. "2025-11-29"
 
 todayLabel.textContent = `Today: ${today}`;
 
+// Calculate current streak of consecutive completed days up to today
+function calculateStreak(completedDates = {}, today) {
+  // Work with a copy of today's date
+  const current = new Date(today);
+  let streak = 0;
+
+  while (true) {
+    const key = current.toISOString().slice(0, 10); // "YYYY-MM-DD"
+
+    if (completedDates[key]) {
+      streak += 1;
+      // Move one day back
+      current.setDate(current.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+
+  return streak;
+}
+
+todayLabel.textContent = `Today: ${today}`;
+
 // Load habits from localStorage
 function loadHabits() {
   const data = localStorage.getItem("habit-tracker-data");
@@ -51,6 +74,34 @@ function renderHabits() {
 
     const right = document.createElement("div");
     right.className = "habit-actions";
+
+    // Total days completed
+const timesDone = habit.completedDates
+  ? Object.keys(habit.completedDates).filter((d) => habit.completedDates[d]).length
+  : 0;
+
+// Current streak up to today
+const streak = calculateStreak(habit.completedDates || {}, today);
+
+const countSpan = document.createElement("span");
+countSpan.textContent = `${timesDone} day(s) done`;
+
+const streakSpan = document.createElement("span");
+streakSpan.textContent = `Streak: ${streak} day(s)`;
+
+// Delete button
+const deleteBtn = document.createElement("button");
+deleteBtn.textContent = "Delete";
+deleteBtn.addEventListener("click", () => {
+  state.habits.splice(index, 1);
+  saveHabits(state);
+  renderHabits();
+});
+
+// Add all three to the actions area
+right.appendChild(countSpan);
+right.appendChild(streakSpan);
+right.appendChild(deleteBtn);
 
     const timesDone = habit.completedDates
       ? Object.keys(habit.completedDates).filter((d) => habit.completedDates[d]).length
