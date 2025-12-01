@@ -11,6 +11,7 @@ const copyBtn = document.getElementById("copy-btn");
 const copyStatus = document.getElementById("copy-status");
 
 function buildPrompt() {
+  function buildPrompt() {
   const business = businessInput.value.trim();
   const audience = audienceInput.value.trim();
   const platform = platformSelect.value;
@@ -20,13 +21,56 @@ function buildPrompt() {
   const extras = extrasInput.value.trim();
 
   if (!business || !audience || !offer) {
-    return `Before generating content, please fill in:
+    return `Please fill in:
 - Your business or niche
 - Your target audience
 - Your offer / topic
 
 Then click "Generate ChatGPT prompt".`;
   }
+
+  // PLATFORM-FRIENDLY LABEL
+  const platformLabel = platform === "Facebook" ? "Facebook post"
+                        : platform === "Instagram" ? "Instagram post"
+                        : platform === "LinkedIn" ? "LinkedIn post"
+                        : platform === "TikTok" ? "TikTok script"
+                        : platform === "Email" ? "Email newsletter"
+                        : platform;
+
+  // AUTO-PLURALIZED AUDIENCE
+  const audiencePlural = audience.toLowerCase().includes("business")
+    ? audience.replace(/business\b/i, "businesses")
+    : audience;
+
+  return `
+You are a marketing copywriter who specializes in content for small service-based businesses.
+
+BUSINESS CONTEXT
+- Business / niche: ${business}
+- Target audience: ${audiencePlural}
+- Platform: ${platformLabel}
+- Primary goal: ${goal}
+- Tone & voice: ${tone}
+
+OFFER / TOPIC
+${offer}
+
+CONTENT TASK
+Create a ${platformLabel.toLowerCase()} that will ${goal}.
+Use a ${tone} tone that speaks directly to ${audiencePlural}.
+Include:
+- A strong hook in the first line
+- Clear benefits related to ${business}
+- A specific call to action
+- Language that feels natural, confident, and not overly salesy
+
+${extras ? `EXTRA DETAILS\n${extras}\n` : ""}FORMATTING
+- Use short paragraphs for easy reading on ${platform}
+- Add line breaks where it makes sense
+- Avoid emojis unless they truly enhance the message
+
+At the end, provide 3 alternative angles I could try next time.`;
+}
 
   return `
 You are a marketing copywriter who specializes in content for small service-based businesses.
