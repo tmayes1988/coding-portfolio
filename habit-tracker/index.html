@@ -12,9 +12,17 @@
     <p class="subtitle">Track your daily habits and keep your streaks alive.</p>
 
     <div class="add-habit">
-      <input id="habit-input" type="text" placeholder="New habit (e.g. Drink water)" />
-      <button id="add-habit-btn">Add</button>
-    </div>
+  <input id="habit-input" type="text" placeholder="New habit (e.g. Drink water)" />
+
+  <select id="habit-category">
+    <option value="Health">Health</option>
+    <option value="Work">Work</option>
+    <option value="Personal">Personal</option>
+    <option value="Other" selected>Other</option>
+  </select>
+
+  <button id="add-habit-btn">Add</button>
+</div>
 
     <div class="today">
   <h2 id="today-label"></h2>
