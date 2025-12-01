@@ -1,1 +1,156 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>AI Content Assistant | The AI Dollhouse</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div>
+        <h1>AI Content Assistant</h1>
+        <p class="subtitle">
+          Turn your business details into copy-ready ChatGPT prompts for posts, emails, and more.
+        </p>
+      </div>
+      <span class="badge">The AI Dollhouse Labs</span>
+    </header>
+
+    <main class="layout">
+      <section class="form-card">
+        <h2>1. Describe the content you want</h2>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="business-type">Your business or niche</label>
+            <input
+              id="business-type"
+              type="text"
+              placeholder="Cleaning business for busy professionals"
+            />
+          </div>
+
+          <div class="field">
+            <label for="audience">Target audience</label>
+            <input
+              id="audience"
+              type="text"
+              placeholder="Busy working moms in Atlanta"
+            />
+          </div>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="platform">Platform</label>
+            <select id="platform">
+              <option value="Instagram">Instagram post</option>
+              <option value="Facebook">Facebook post</option>
+              <option value="Email">Email newsletter</option>
+              <option value="Blog">Blog post</option>
+              <option value="LinkedIn">LinkedIn post</option>
+              <option value="TikTok">TikTok script</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="goal">Primary goal</label>
+            <select id="goal">
+              <option value="drive sales and bookings">Sell / drive bookings</option>
+              <option value="educate and build authority">Educate / educate audience</option>
+              <option value="build trust and nurture the audience">Build trust / nurture</option>
+              <option value="announce a new offer or service">Announce something new</option>
+              <option value="generate leads and capture emails">Generate leads</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="tone">Tone & voice</label>
+            <select id="tone">
+              <option value="warm, encouraging, and friendly">
+                Warm & encouraging
+              </option>
+              <option value="confident, expert, and direct">
+                Confident & expert
+              </option>
+              <option value="playful, bold, and fun">
+                Playful & bold
+              </option>
+              <option value="calm, professional, and reassuring">
+                Calm & professional
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="offer">
+            Offer, topic, or focus
+            <span class="hint">(what are you promoting or talking about?)</span>
+          </label>
+          <textarea
+            id="offer"
+            rows="3"
+            placeholder="Example: 20% off first-time deep cleans this month..."
+          ></textarea>
+        </div>
+
+        <div class="field">
+          <label for="extras">
+            Extra details (optional)
+            <span class="hint">Links, CTAs, time-sensitive info, or key phrases.</span>
+          </label>
+          <textarea
+            id="extras"
+            rows="2"
+            placeholder="Mention that spots are limited to 10 clients this month. Add a clear call to action to book a quote."
+          ></textarea>
+        </div>
+
+        <button id="generate-btn" class="btn-primary">
+          Generate ChatGPT prompt
+        </button>
+      </section>
+
+      <section class="output-card">
+        <h2>2. Copy your prompt into ChatGPT</h2>
+        <p class="output-hint">
+          Paste this into ChatGPT (or your favorite AI tool) and let it write
+          the content for you. You can tweak anything before you copy.
+        </p>
+
+        <textarea
+          id="output"
+          class="output-box"
+          rows="12"
+          readonly
+          placeholder="Your prompt will appear here..."
+        ></textarea>
+
+        <div class="output-actions">
+          <button id="copy-btn" class="btn-secondary">
+            Copy prompt
+          </button>
+          <span id="copy-status" class="copy-status"></span>
+        </div>
+
+        <div class="tips">
+          <h3>Prompt tips</h3>
+          <ul>
+            <li>Add “Give me 3 variations” at the end for more options.</li>
+            <li>Ask the AI to include hooks, CTAs, and hashtags where relevant.</li>
+            <li>Save your favorite prompts to reuse for future campaigns.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
