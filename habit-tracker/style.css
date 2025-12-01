@@ -50,6 +50,15 @@ h1 {
   color: #e5e7eb;
 }
 
+.add-habit select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #374151;
+  background: #020617;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
 .add-habit button {
   padding: 8px 14px;
   border-radius: 8px;
