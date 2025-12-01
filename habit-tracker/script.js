@@ -86,7 +86,11 @@ function renderHabits() {
     countSpan.textContent = `${timesDone} day(s) done`;
 
     const streakSpan = document.createElement("span");
-    streakSpan.textContent = `Streak: ${streak} day(s)`;
+if (streak >= 3) {
+  streakSpan.textContent = `Streak: ${streak} day(s) 🔥`;
+} else {
+  streakSpan.textContent = `Streak: ${streak} day(s)`;
+}
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
