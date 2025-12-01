@@ -268,13 +268,21 @@ animation-fill-mode: both;
       margin-top: 4px;
     }
 
-    .project-tag {
-  font-size: 0.75rem;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: #13091B;
-  border: 1px solid rgba(255, 79, 163, 0.25);
-  color: #EED9FF;
+ .project-tag {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(255, 79, 163, 0.08); /* soft blush background */
+    border: 1px solid rgba(255, 79, 163, 0.45); /* dollhouse rose accent */
+    color: #FF4FA3; /* bright pink rose text */
+    backdrop-filter: blur(4px);
+    transition: 0.2s ease-out;
+}
+
+.project-tag:hover {
+    background: rgba(255, 79, 163, 0.18);
+    transform: translateY(-2px);
+    box-shadow: 0 0 12px rgba(255, 79, 163, 0.25);
 }
 
     .project-actions {
