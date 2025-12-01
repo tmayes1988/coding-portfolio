@@ -5,6 +5,23 @@ const addHabitBtn = document.getElementById("add-habit-btn");
 const habitList = document.getElementById("habit-list");
 const todayLabel = document.getElementById("today-label");
 
+const celebrationBanner = document.getElementById("celebration-banner");
+
+function updateCelebrationBanner() {
+  if (!celebrationBanner) return;
+
+  if (state.habits.length === 0) {
+    celebrationBanner.style.display = "none";
+    return;
+  }
+
+  const allDone = state.habits.every(habit => {
+    return habit.completedDates && habit.completedDates[today];
+  });
+
+  celebrationBanner.style.display = allDone ? "block" : "none";
+}
+
 const today = new Date().toISOString().slice(0, 10); // e.g. "2025-11-30"
 todayLabel.textContent = `Today: ${today}`;
 
@@ -122,6 +139,9 @@ addHabitBtn.addEventListener("click", () => {
 
   habitInput.value = "";
   saveHabits(state);
+  renderHabits();
+  updateCelebrationBanner();   // <— add this line
+});
   renderHabits();
 });
 
