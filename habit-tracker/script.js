@@ -4,38 +4,22 @@ const habitInput = document.getElementById("habit-input");
 const addHabitBtn = document.getElementById("add-habit-btn");
 const habitList = document.getElementById("habit-list");
 const todayLabel = document.getElementById("today-label");
-
 const celebrationBanner = document.getElementById("celebration-banner");
 
-function updateCelebrationBanner() {
-  if (!celebrationBanner) return;
-
-  if (state.habits.length === 0) {
-    celebrationBanner.style.display = "none";
-    return;
-  }
-
-  const allDone = state.habits.every(habit => {
-    return habit.completedDates && habit.completedDates[today];
-  });
-
-  celebrationBanner.style.display = allDone ? "block" : "none";
-}
-
-const today = new Date().toISOString().slice(0, 10); // e.g. "2025-11-30"
+const today = new Date().toISOString().slice(0, 10); // e.g. "2025-12-01"
 todayLabel.textContent = `Today: ${today}`;
 
 // Calculate current streak of consecutive completed days up to today
 function calculateStreak(completedDates = {}, todayStr) {
   let streak = 0;
   const current = new Date(todayStr);
-  current.setHours(0, 0, 0, 0); // normalize to midnight
+  current.setHours(0, 0, 0, 0); // normalize
 
   while (true) {
     const key = current.toISOString().slice(0, 10); // "YYYY-MM-DD"
     if (completedDates[key]) {
       streak += 1;
-      current.setDate(current.getDate() - 1); // move one day back
+      current.setDate(current.getDate() - 1);
     } else {
       break;
     }
@@ -56,6 +40,21 @@ function saveHabits(state) {
 }
 
 let state = loadHabits();
+
+function updateCelebrationBanner() {
+  if (!celebrationBanner) return;
+
+  if (state.habits.length === 0) {
+    celebrationBanner.style.display = "none";
+    return;
+  }
+
+  const allDone = state.habits.every((habit) => {
+    return habit.completedDates && habit.completedDates[today];
+  });
+
+  celebrationBanner.style.display = allDone ? "block" : "none";
+}
 
 function renderHabits() {
   habitList.innerHTML = "";
@@ -103,11 +102,11 @@ function renderHabits() {
     countSpan.textContent = `${timesDone} day(s) done`;
 
     const streakSpan = document.createElement("span");
-if (streak >= 3) {
-  streakSpan.textContent = `Streak: ${streak} day(s) 🔥`;
-} else {
-  streakSpan.textContent = `Streak: ${streak} day(s)`;
-}
+    if (streak >= 3) {
+      streakSpan.textContent = `Streak: ${streak} day(s) 🔥`;
+    } else {
+      streakSpan.textContent = `Streak: ${streak} day(s)`;
+    }
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
@@ -126,6 +125,8 @@ if (streak >= 3) {
 
     habitList.appendChild(li);
   });
+
+  updateCelebrationBanner();
 }
 
 addHabitBtn.addEventListener("click", () => {
@@ -139,9 +140,6 @@ addHabitBtn.addEventListener("click", () => {
 
   habitInput.value = "";
   saveHabits(state);
-  renderHabits();
-  updateCelebrationBanner();   // <— add this line
-});
   renderHabits();
 });
 
