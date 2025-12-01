@@ -122,3 +122,21 @@ input[type="checkbox"] {
   height: 18px;
   cursor: pointer;
 }
+
+#celebration-banner {
+  margin: 8px 0 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #022c22;
+  border: 1px solid #22c55e;
+  color: #bbf7d0;
+  font-size: 0.9rem;
+  text-align: center;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; transform: scale(0.98); }
+  50% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.6; transform: scale(0.98); }
+}
