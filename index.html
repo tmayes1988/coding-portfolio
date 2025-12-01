@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>Tamara Mayes | Coding Portfolio</title>
+  <style>
+    :root {
+      --bg: #020617;
+      --card: #020817;
+      --accent: #10b981;
+      --accent-soft: #064e3b;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --danger: #f97316;
+      --border-subtle: #1f2937;
+      --pill: #111827;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.5);
+      --radius-lg: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 45%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 960px;
+      background: rgba(2, 8, 23, 0.96);
+      border-radius: 24px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      box-shadow: var(--shadow-soft);
+      padding: 28px 22px 32px;
+      backdrop-filter: blur(16px);
+    }
+
+    @media (min-width: 768px) {
+      .page {
+        padding: 32px 32px 40px;
+      }
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    @media (min-width: 640px) {
+      header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+    }
+
+    .identity {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .tagline {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--pill);
+      border: 1px solid rgba(55, 65, 81, 0.8);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      letter-spacing: 0.03em;
+    }
+
+    .cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      padding: 9px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #022c22;
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: #22c55e;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    section {
+      border-radius: 18px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: radial-gradient(circle at top left, #020617, #020617 36%, #020617);
+      padding: 18px 16px 20px;
+    }
+
+    @media (min-width: 768px) {
+      section {
+        padding: 20px 18px 22px;
+      }
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .section-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 720px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .project-card {
+      border-radius: 14px;
+      border: 1px solid var(--border-subtle);
+      background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.96),
+        rgba(2, 6, 23, 0.98)
+      );
+      padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .project-badge {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+
+    .project-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .project-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .project-tag {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: var(--text-muted);
+    }
+
+    .project-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .project-link {
+      font-size: 0.8rem;
+      text-decoration: none;
+      color: var(--accent);
+    }
+
+    .project-link:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 18px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="identity">
+        <div>
+          <h1>Tamara Mayes</h1>
+          <p class="tagline">
+            AI-powered ops & automation · The AI Dollhouse Labs
+          </p>
+        </div>
+        <div class="pill-row">
+          <span class="pill">Customer Ops → Automation</span>
+          <span class="pill">Small Biz & Solopreneurs</span>
+          <span class="pill">Learning to ship in public</span>
+        </div>
+      </div>
+
+      <div class="cta-group">
+        <a
+          class="btn btn-primary"
+          href="./habit-tracker/"
+        >
+          View Habit Tracker
+        </a>
+        <a
+          class="btn btn-ghost"
+          href="https://github.com/tmayes1988/coding-portfolio"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View repo on GitHub
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <!-- Projects -->
+      <section>
+        <div class="section-header">
+          <div class="section-title">Projects</div>
+          <div class="section-subtitle">
+            Early builds as I learn HTML, CSS, JS & automation.
+          </div>
+        </div>
+
+        <div class="projects-grid">
+          <!-- Habit Tracker card -->
+          <article class="project-card">
+            <div class="project-badge">Live · Frontend</div>
+            <div class="project-title">Habit Tracker</div>
+            <p class="project-meta">
+              A simple, focused habit tracker with streaks, categories, local
+              storage, and a little ✨ dopamine banner when everything is done.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">HTML</span>
+              <span class="project-tag">CSS</span>
+              <span class="project-tag">JavaScript</span>
+              <span class="project-tag">LocalStorage</span>
+            </div>
+            <div class="project-actions">
+              <a
+                class="project-link"
+                href="./habit-tracker/"
+              >
+                ▸ Open live app
+              </a>
+              <a
+                class="project-link"
+                href="https://github.com/tmayes1988/coding-portfolio/tree/main/habit-tracker"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                &lt;/&gt; View source
+              </a>
+            </div>
+          </article>
+
+          <!-- Placeholder project 1 -->
+          <article class="project-card">
+            <div class="project-badge">Planned</div>
+            <div class="project-title">AI-Powered Content Assistant</div>
+            <p class="project-meta">
+              A small-business-friendly tool for generating social posts, email
+              copy, and ideas using AI prompt systems.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">AI</span>
+              <span class="project-tag">Prompt Design</span>
+              <span class="project-tag">Small Biz</span>
+            </div>
+            <div class="project-actions">
+              <span class="project-link" style="opacity: 0.6;">Coming soon</span>
+            </div>
+          </article>
+
+          <!-- Placeholder project 2 -->
+          <article class="project-card">
+            <div class="project-badge">Planned</div>
+            <div class="project-title">Ops & Automation Dashboard</div>
+            <p class="project-meta">
+              A central hub to visualize tasks, automations, and metrics for
+              service-based businesses.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Automation</span>
+              <span class="project-tag">Dashboards</span>
+              <span class="project-tag">n8n / Make</span>
+            </div>
+            <div class="project-actions">
+              <span class="project-link" style="opacity: 0.6;">Coming soon</span>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Built in public as I learn to ship with code & AI.</span>
+      <span>
+        Powered by
+        <a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer">
+          ChatGPT
+        </a>
+        & a lot of coffee.
+      </span>
+    </footer>
+  </div>
+</body>
+</html>
