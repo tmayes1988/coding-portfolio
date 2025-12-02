@@ -8,18 +8,36 @@
   />
   <title>Tamara Mayes | Coding Portfolio</title>
   <style>
-    :root {
-  --bg: #05020A;                /* Deeper luxury background */
-  --card: #0B0414;              /* Slightly warm dark card */
-  --accent: #FF4FA3;            /* Dollhouse Pink */
-  --accent-soft: #A78BFA20;     /* Lavender low-opacity */
-  --text-main: #F3E8FF;         /* Soft lilac-tinted white */
-  --text-muted: #BFAEDB;        /* Muted lavender-grey */
-  --danger: #FF6B6B;            /* Soft coral red (cleaner than pure red) */
-  --border-subtle: #1E1029;     /* Slightly purple-tinted dark border */
-  --pill: #140A1F;              /* Dark purple pill background */
-  --shadow-soft: 0 18px 40px rgba(255, 79, 163, 0.05); /* pink glow */
-  --radius-lg: 18px;
+   :root {
+  /* Core palette – The AI Dollhouse */
+  --bg: #05020a;
+  --card: #090313;
+
+  /* Main brand accent – Dollhouse pink */
+  --accent: #ff4fa3;
+  --accent-soft: rgba(255, 79, 163, 0.12);
+
+  /* Secondary accents */
+  --accent-alt: #38bdf8;      /* soft cyan / consultant tech */
+  --accent-alt-soft: rgba(56, 189, 248, 0.16);
+
+  /* Text */
+  --text-main: #fdf4ff;       /* soft light lavender */
+  --text-muted: #c4b5fd;      /* muted lavender */
+  --text-soft: #9ca3af;       /* neutral grey */
+
+  /* Borders & shadows */
+  --border-subtle: #251133;
+  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.7);
+
+  /* Pills & chips */
+  --pill: #111827;
+
+  /* Status */
+  --danger: #fb7185;
+
+  /* Radii */
+  --radius-lg: 20px;
 }
 
     
@@ -42,15 +60,17 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #0f172a 0, #020617 45%);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 32px 16px;
-    }
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top, #1f2937 0, #05020a 55%),
+    #05020a;
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px;
+}
 
     .page {
       width: 100%;
@@ -105,16 +125,18 @@ animation-fill-mode: both;
       margin-top: 4px;
     }
 
-    .pill {
-      font-size: 0.75rem;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: var(--pill);
-      border: 1px solid rgba(55, 65, 81, 0.8);
-      color: var(--text-muted);
-      white-space: nowrap;
-    }
-
+   .pill {
+    font-size: 0.75rem;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: rgba(255, 79, 163, 0.08);
+    border: 1px solid rgba(255, 79, 163, 0.45);
+    color: #ffe4f1;
+    backdrop-filter: blur(6px);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
     h1 {
   font-size: 1.9rem;
   letter-spacing: 0.03em;
