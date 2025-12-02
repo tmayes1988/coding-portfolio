@@ -6,32 +6,35 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   />
-  <title>AI Content Assistant | The AI Dollhouse</title>
+  <title>AI Content Assistant · The AI Dollhouse</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="page">
-    <header class="header">
-      <div>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="app-header-main">
         <h1>AI Content Assistant</h1>
-        <p class="subtitle">
-          Turn your business details into copy-ready ChatGPT prompts for posts, emails, and more.
+        <p class="app-subtitle">
+          Turn your ideas into ready-to-use ChatGPT prompts for social posts,
+          emails, and more — built for small service-based businesses.
         </p>
       </div>
-      <span class="badge">The AI Dollhouse Labs</span>
+
+      <a href="../index.html" class="back-link">← Back to portfolio</a>
     </header>
 
-    <main class="layout">
-      <section class="form-card">
-        <h2>1. Describe the content you want</h2>
+    <main class="app-layout">
+      <!-- LEFT: INPUTS -->
+      <section class="panel panel-input">
+        <h2 class="panel-title">1. Describe the content you need</h2>
 
-        <div class="field-grid">
+        <form id="prompt-form">
           <div class="field">
-            <label for="business-type">Your business or niche</label>
+            <label for="business">Business / niche</label>
             <input
-              id="business-type"
+              id="business"
               type="text"
-              placeholder="Cleaning business for busy professionals"
+              placeholder="e.g. Janitorial & disinfection services for offices"
             />
           </div>
 
@@ -40,112 +43,132 @@
             <input
               id="audience"
               type="text"
-              placeholder="Busy working moms in Atlanta"
+              placeholder="e.g. Small to medium-sized local businesses"
             />
           </div>
-        </div>
 
-        <div class="field-grid">
-          <div class="field">
-            <label for="platform">Platform</label>
-            <select id="platform">
-              <option value="Instagram">Instagram post</option>
-              <option value="Facebook">Facebook post</option>
-              <option value="Email">Email newsletter</option>
-              <option value="Blog">Blog post</option>
-              <option value="LinkedIn">LinkedIn post</option>
-              <option value="TikTok">TikTok script</option>
-            </select>
+          <div class="field-group">
+            <div class="field">
+              <label for="platform">Platform</label>
+              <select id="platform">
+                <option value="Facebook" selected>Facebook</option>
+                <option value="Instagram">Instagram</option>
+                <option value="LinkedIn">LinkedIn</option>
+                <option value="TikTok">TikTok</option>
+                <option value="Email">Email</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="tone">Tone &amp; voice</label>
+              <select id="tone">
+                <option value="warm, encouraging, and friendly" selected>
+                  Warm, encouraging, and friendly
+                </option>
+                <option value="professional and confident">
+                  Professional and confident
+                </option>
+                <option value="conversational and playful">
+                  Conversational and playful
+                </option>
+                <option value="direct and to-the-point">
+                  Direct and to-the-point
+                </option>
+              </select>
+            </div>
           </div>
 
           <div class="field">
             <label for="goal">Primary goal</label>
             <select id="goal">
-              <option value="drive sales and bookings">Sell / drive bookings</option>
-              <option value="educate and build authority">Educate / educate audience</option>
-              <option value="build trust and nurture the audience">Build trust / nurture</option>
-              <option value="announce a new offer or service">Announce something new</option>
-              <option value="generate leads and capture emails">Generate leads</option>
+              <option value="build trust and nurture the audience" selected>
+                Build trust &amp; nurture the audience
+              </option>
+              <option value="generate leads and inbound inquiries">
+                Generate leads &amp; inquiries
+              </option>
+              <option value="drive traffic to a specific page">
+                Drive traffic to a specific page
+              </option>
+              <option value="promote a limited-time offer">
+                Promote a limited-time offer
+              </option>
             </select>
+          </div>
+
+          <!-- NEW: content type + length -->
+          <div class="field-group two-column">
+            <div class="field">
+              <label for="content-type">Content type</label>
+              <select id="content-type">
+                <option value="social post" selected>Social post</option>
+                <option value="email">Email</option>
+                <option value="ad">Ad</option>
+                <option value="short video script">Short video script</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="length">Approx length</label>
+              <select id="length">
+                <option value="short" selected>Short (1–3 sentences)</option>
+                <option value="medium">Medium (1–2 short paragraphs)</option>
+                <option value="long">Long (2–4 paragraphs)</option>
+              </select>
+            </div>
           </div>
 
           <div class="field">
-            <label for="tone">Tone & voice</label>
-            <select id="tone">
-              <option value="warm, encouraging, and friendly">
-                Warm & encouraging
-              </option>
-              <option value="confident, expert, and direct">
-                Confident & expert
-              </option>
-              <option value="playful, bold, and fun">
-                Playful & bold
-              </option>
-              <option value="calm, professional, and reassuring">
-                Calm & professional
-              </option>
-            </select>
+            <label for="offer">Offer / topic</label>
+            <textarea
+              id="offer"
+              rows="3"
+              placeholder="e.g. The importance of disinfecting the workplace during flu season. We offer disinfection services to prevent the spread of viruses like flu and SARS-CoV-2."
+            ></textarea>
           </div>
-        </div>
 
-        <div class="field">
-          <label for="offer">
-            Offer, topic, or focus
-            <span class="hint">(what are you promoting or talking about?)</span>
-          </label>
-          <textarea
-            id="offer"
-            rows="3"
-            placeholder="Example: 20% off first-time deep cleans this month..."
-          ></textarea>
-        </div>
+          <div class="field">
+            <label for="extras">Extra details (optional)</label>
+            <textarea
+              id="extras"
+              rows="3"
+              placeholder="e.g. Free estimates, limited spots, mention we’re locally owned, avoid sounding too salesy."
+            ></textarea>
+          </div>
 
-        <div class="field">
-          <label for="extras">
-            Extra details (optional)
-            <span class="hint">Links, CTAs, time-sensitive info, or key phrases.</span>
-          </label>
-          <textarea
-            id="extras"
-            rows="2"
-            placeholder="Mention that spots are limited to 10 clients this month. Add a clear call to action to book a quote."
-          ></textarea>
-        </div>
-
-        <button id="generate-btn" class="btn-primary">
-          Generate ChatGPT prompt
-        </button>
+          <button id="generate-btn" type="submit" class="primary-btn">
+            Generate ChatGPT prompt
+          </button>
+        </form>
       </section>
 
-      <section class="output-card">
-        <h2>2. Copy your prompt into ChatGPT</h2>
-        <p class="output-hint">
-          Paste this into ChatGPT (or your favorite AI tool) and let it write
-          the content for you. You can tweak anything before you copy.
+      <!-- RIGHT: OUTPUT -->
+      <section class="panel panel-output">
+        <h2 class="panel-title">2. Copy and use your prompt</h2>
+
+        <p class="panel-help">
+          Paste this into ChatGPT (or your AI tool of choice) to generate content
+          for your client or your own business.
         </p>
 
-        <textarea
-          id="output"
-          class="output-box"
-          rows="12"
-          readonly
-          placeholder="Your prompt will appear here..."
-        ></textarea>
+        <div class="output">
+          <div class="output-header">
+            <label for="prompt-output">Your ChatGPT prompt</label>
 
-        <div class="output-actions">
-          <button id="copy-btn" class="btn-secondary">
-            Copy prompt
-          </button>
-          <span id="copy-status" class="copy-status"></span>
-        </div>
+            <div class="output-actions">
+              <button id="copy-btn" type="button" class="ghost-btn">
+                Copy prompt
+              </button>
+              <span id="copy-status" class="copy-status"></span>
+            </div>
+          </div>
 
-        <div class="tips">
-          <h3>Prompt tips</h3>
-          <ul>
-            <li>Add “Give me 3 variations” at the end for more options.</li>
-            <li>Ask the AI to include hooks, CTAs, and hashtags where relevant.</li>
-            <li>Save your favorite prompts to reuse for future campaigns.</li>
-          </ul>
+          <textarea
+            id="prompt-output"
+            rows="18"
+            readonly
+            placeholder="Fill out the fields on the left, then click &quot;Generate ChatGPT prompt&quot;."
+          ></textarea>
         </div>
       </section>
     </main>
