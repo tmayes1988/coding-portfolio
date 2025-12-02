@@ -40,6 +40,16 @@
   --radius-lg: 20px;
 }
 
+    body {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
     
 
 @keyframes fadeInUp {
@@ -71,6 +81,7 @@
   justify-content: center;
   padding: 32px 16px;
 }
+
 
     .page {
       width: 100%;
@@ -212,6 +223,10 @@ animation-fill-mode: both;
   font-size: 1.9rem;
   letter-spacing: 0.03em;
   color: var(--accent);
+}
+
+    h1 {
+  text-shadow: 0 4px 12px rgba(255, 79, 163, 0.4);
 }
 
     .cta-group {
@@ -545,6 +560,15 @@ animation-fill-mode: both;
     </footer>
   </div>
 
+  <footer class="site-footer">
+  <span>Built with HTML, CSS, and AI automation ·</span>
+  <span class="footer-brand">The AI Dollhouse</span>
+</footer>
+
+  <footer class="site-footer">
+  <span>Built with HTML, CSS, and AI automation ·</span>
+  <span class="footer-brand">The AI Dollhouse</span>
+</footer>
   
 </body>
 </html>
