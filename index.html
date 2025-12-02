@@ -137,6 +137,77 @@ animation-fill-mode: both;
     text-transform: uppercase;
     white-space: nowrap;
 }
+
+    .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin-top: 4px;
+}
+
+    .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.hero-actions .btn {
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: 0.16s ease-out;
+}
+
+/* Primary button – View Habit Tracker */
+.btn-primary {
+  background: var(--accent);
+  color: #2b0818;
+  box-shadow: 0 12px 28px rgba(255, 79, 163, 0.45);
+}
+
+.btn-primary:hover {
+  background: #ff74c8;
+  box-shadow: 0 16px 34px rgba(255, 116, 200, 0.55);
+  transform: translateY(-1px);
+}
+
+/* Secondary button – View repo */
+.btn-secondary {
+  background: #050816;
+  color: var(--text-main);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+}
+
+.btn-secondary:hover {
+  background: #02111f;
+  border-color: rgba(56, 189, 248, 0.8);
+  transform: translateY(-1px);
+}
+    
     h1 {
   font-size: 1.9rem;
   letter-spacing: 0.03em;
