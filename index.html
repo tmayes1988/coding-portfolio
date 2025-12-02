@@ -78,10 +78,12 @@
   color: var(--text-main);
   min-height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;   /* stack main + footer */
+  align-items: center;      /* center horizontally */
   padding: 32px 16px;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
 }
-
 
     .page {
       width: 100%;
@@ -411,24 +413,24 @@ animation-fill-mode: both;
   color: #FF74C8;
 }
 
-    footer {
-      margin-top: 18px;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
+    .site-footer {
+  margin-top: 40px;
+  font-size: 0.8rem;
+  color: var(--text-soft);
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding-bottom: 20px;
+}
 
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
+.footer-brand {
+  color: var(--accent);
+  font-weight: 600;
+}
 
-    footer a:hover {
-      text-decoration: underline;
-    }
+.site-footer span {
+  white-space: nowrap;
+}
   </style>
 </head>
 <body>
@@ -559,11 +561,6 @@ animation-fill-mode: both;
       </span>
     </footer>
   </div>
-
-  <footer class="site-footer">
-  <span>Built with HTML, CSS, and AI automation ·</span>
-  <span class="footer-brand">The AI Dollhouse</span>
-</footer>
 
   <footer class="site-footer">
   <span>Built with HTML, CSS, and AI automation ·</span>
