@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Client Onboarding Operations Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  /* ── TOKENS ─────────────────────────────────────────────── */
+  :root {
+    --navy:   #0F1F3D;
+    --slate:  #1E3A5F;
+    --teal:   #0E8F7F;
+    --teal-lt:#E6F5F3;
+    --amber:  #E8973A;
+    --red:    #D94F4F;
+    --green:  #2EAD7B;
+    --ink:    #1A2438;
+    --muted:  #6B7A94;
+    --border: #DDE3EE;
+    --surface:#F7F9FC;
+    --white:  #FFFFFF;
+    --font-display: 'DM Serif Display', serif;
+    --font-body:    'Inter', sans-serif;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(15,31,61,.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── TOP NAV ─────────────────────────────────────────────── */
+  .topbar {
+    background: var(--navy);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--teal);
+  }
+  .topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .topbar-icon {
+    width: 34px;
+    height: 34px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .topbar-title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    color: var(--white);
+    letter-spacing: .01em;
+  }
+  .topbar-subtitle {
+    font-size: 11px;
+    color: rgba(255,255,255,.5);
+    margin-top: -2px;
+  }
+  .topbar-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .topbar-date {
+    font-size: 12px;
+    color: rgba(255,255,255,.55);
+  }
+  .badge-live {
+    background: var(--teal);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── MAIN LAYOUT ─────────────────────────────────────────── */
+  .page { max-width: 1200px; margin: 0 auto; padding: 28px 24px 60px; }
+
+  /* ── SECTION LABELS ──────────────────────────────────────── */
+  .section-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 14px;
+  }
+  .section-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .section-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  /* ── KPI CARDS ───────────────────────────────────────────── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .kpi-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .kpi-card.blue::before  { background: var(--slate); }
+  .kpi-card.red::before   { background: var(--red); }
+  .kpi-card.teal::before  { background: var(--teal); }
+  .kpi-card.green::before { background: var(--green); }
+  .kpi-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .kpi-value {
+    font-family: var(--font-display);
+    font-size: 36px;
+    line-height: 1;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .kpi-delta {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+  .kpi-delta .up   { color: var(--green); }
+  .kpi-delta .down { color: var(--red); }
+  .kpi-icon {
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    font-size: 26px;
+    opacity: .12;
+  }
+
+  /* ── PIPELINE ────────────────────────────────────────────── */
+  .pipeline-wrap { margin-bottom: 36px; }
+  .pipeline-track {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+  }
+  .pipeline-stage {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 14px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    position: relative;
+    transition: transform .15s;
+  }
+  .pipeline-stage:hover { transform: translateY(-2px); }
+  .pipeline-stage.active {
+    border-color: var(--teal);
+    background: var(--teal-lt);
+  }
+  .ps-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .pipeline-stage.active .ps-num { background: var(--teal); }
+  .ps-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  .ps-count {
+    display: inline-block;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 2px 10px;
+  }
+  .pipeline-stage.active .ps-count {
+    background: white;
+    border-color: var(--teal);
+    color: var(--teal);
+  }
+  .ps-arrow {
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: var(--muted);
+    z-index: 2;
+  }
+
+  /* ── TWO-COL LAYOUT ──────────────────────────────────────── */
+  .two-col { display: grid; grid-template-columns: 1fr 340px; gap: 20px; margin-bottom: 36px; }
+
+  /* ── CLIENT TABLE ────────────────────────────────────────── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-header-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .card-header-sub {
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .filter-tabs {
+    display: flex;
+    gap: 4px;
+  }
+  .ftab {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .ftab.active, .ftab:hover {
+    background: var(--navy);
+    color: white;
+    border-color: var(--navy);
+  }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background .12s;
+    cursor: default;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #F0F4FB; }
+  td { padding: 11px 14px; font-size: 12.5px; vertical-align: middle; }
+  .client-name { font-weight: 600; color: var(--ink); }
+  .client-co { font-size: 11px; color: var(--muted); }
+
+  .stage-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #EEF2FF;
+    color: #4258C9;
+    white-space: nowrap;
+  }
+  .stage-pill.green { background: #E7F8F2; color: #1E8A60; }
+  .stage-pill.amber { background: #FEF4E8; color: #B5671E; }
+  .stage-pill.navy  { background: #E8EDF8; color: var(--slate); }
+
+  .status-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot.green  { background: var(--green); }
+  .dot.amber  { background: var(--amber); }
+  .dot.red    { background: var(--red); }
+  .dot.blue   { background: #4258C9; }
+
+  .risk-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .risk-badge.low  { background: #E7F8F2; color: #1E8A60; }
+  .risk-badge.med  { background: #FEF4E8; color: #B5671E; }
+  .risk-badge.high { background: #FDEAEA; color: #B33A3A; }
+
+  /* ── AUTOMATION SIDE PANEL ───────────────────────────────── */
+  .auto-list { padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .auto-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .auto-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .auto-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+  .auto-icon.teal  { background: var(--teal-lt); }
+  .auto-icon.blue  { background: #EEF2FF; }
+  .auto-icon.green { background: #E7F8F2; }
+  .auto-icon.amber { background: #FEF4E8; }
+  .auto-name { font-size: 13px; font-weight: 600; color: var(--navy); }
+  .auto-desc { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+  .auto-tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 20px;
+    margin-top: 5px;
+  }
+  .auto-tag.active   { background: #E7F8F2; color: #1E8A60; }
+  .auto-tag.planned  { background: #FEF4E8; color: #B5671E; }
+  .auto-tag.proposed { background: #EEF2FF; color: #4258C9; }
+
+  /* ── SOP SECTION ─────────────────────────────────────────── */
+  .sop-wrap {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .sop-header {
+    background: var(--navy);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sop-header-title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    color: var(--white);
+  }
+  .sop-header-meta {
+    font-size: 11px;
+    color: rgba(255,255,255,.5);
+    margin-top: 2px;
+  }
+  .sop-version {
+    background: rgba(255,255,255,.1);
+    color: rgba(255,255,255,.75);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .sop-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .sop-col {
+    padding: 20px 22px;
+    border-right: 1px solid var(--border);
+  }
+  .sop-col:last-child { border-right: none; }
+  .sop-col-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sop-steps { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .sop-step {
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+  }
+  .sop-check {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    border: 1.5px solid var(--teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-size: 9px;
+    color: var(--teal);
+    cursor: pointer;
+    transition: all .15s;
+    user-select: none;
+  }
+  .sop-check.checked {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: white;
+  }
+  .sop-step-text {
+    font-size: 12px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .sop-step-text.done {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+  .sop-step-owner {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+
+  /* ── FOOTER ──────────────────────────────────────────────── */
+  .footer {
+    background: var(--navy);
+    text-align: center;
+    padding: 18px 24px;
+    font-size: 12px;
+    color: rgba(255,255,255,.5);
+    border-top: 2px solid var(--teal);
+  }
+  .footer strong { color: rgba(255,255,255,.8); }
+
+  /* ── RESPONSIVE ──────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .kpi-grid { grid-template-columns: repeat(2,1fr); }
+    .pipeline-track { grid-template-columns: repeat(3,1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .sop-columns { grid-template-columns: 1fr; }
+    .sop-col { border-right: none; border-bottom: 1px solid var(--border); }
+    .ps-arrow { display: none; }
+  }
+  @media (max-width: 560px) {
+    .kpi-grid { grid-template-columns: 1fr; }
+    .topbar-title { font-size: 14px; }
+    table { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-icon">📋</div>
+    <div>
+      <div class="topbar-title">Onboarding Operations</div>
+      <div class="topbar-subtitle">Client Success &amp; Process Intelligence</div>
+    </div>
+  </div>
+  <div class="topbar-meta">
+    <span class="topbar-date" id="live-date"></span>
+    <span class="badge-live">● Live</span>
+  </div>
+</header>
+
+<main class="page">
+
+  <!-- KPI CARDS -->
+  <div class="section-eyebrow">Performance Overview</div>
+  <div class="kpi-grid">
+    <div class="kpi-card blue">
+      <div class="kpi-icon">👥</div>
+      <div class="kpi-label">Total Clients</div>
+      <div class="kpi-value">24</div>
+      <div class="kpi-delta"><span class="up">↑ 4</span> new this month</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-icon">⚠️</div>
+      <div class="kpi-label">Delayed Clients</div>
+      <div class="kpi-value">3</div>
+      <div class="kpi-delta"><span class="down">↑ 1</span> vs. last month</div>
+    </div>
+    <div class="kpi-card teal">
+      <div class="kpi-icon">⏱</div>
+      <div class="kpi-label">Avg. Time-to-Onboard</div>
+      <div class="kpi-value">18<span style="font-size:18px;font-family:var(--font-body);font-weight:400"> days</span></div>
+      <div class="kpi-delta"><span class="up">↓ 2 days</span> vs. Q1 target</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-icon">✅</div>
+      <div class="kpi-label">Tasks Completed</div>
+      <div class="kpi-value">142</div>
+      <div class="kpi-delta"><span class="up">94%</span> on-time rate</div>
+    </div>
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="pipeline-wrap">
+    <div class="section-eyebrow">Onboarding Pipeline</div>
+    <div class="pipeline-track">
+      <div class="pipeline-stage">
+        <div class="ps-num">1</div>
+        <div class="ps-name">Contract Signed</div>
+        <div class="ps-count">5 clients</div>
+        <div class="ps-arrow">›</div>
+      </div>
+      <div class="pipeline-stage active">
+        <div class="ps-num">2</div>
+        <div class="ps-name">Digital Intake</div>
+        <div class="ps-count">7 clients</div>
+        <div class="ps-arrow">›</div>
+      </div>
+      <div class="pipeline-stage">
+        <div class="ps-num">3</div>
+        <div class="ps-name">Internal Setup</div>
+        <div class="ps-count">4 clients</div>
+        <div class="ps-arrow">›</div>
+      </div>
+      <div class="pipeline-stage">
+        <div class="ps-num">4</div>
+        <div class="ps-name">Kickoff Call</div>
+        <div class="ps-count">3 clients</div>
+        <div class="ps-arrow">›</div>
+      </div>
+      <div class="pipeline-stage">
+        <div class="ps-num">5</div>
+        <div class="ps-name">Training &amp; Support</div>
+        <div class="ps-count">3 clients</div>
+        <div class="ps-arrow">›</div>
+      </div>
+      <div class="pipeline-stage">
+        <div class="ps-num">6</div>
+        <div class="ps-name">30-Day Success Review</div>
+        <div class="ps-count">2 clients</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLIENT TABLE + AUTOMATION PANEL -->
+  <div class="two-col">
+
+    <!-- TABLE -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-header-title">Active Client Roster</div>
+          <div class="card-header-sub">All active onboarding engagements — Q2 2026</div>
+        </div>
+        <div class="filter-tabs">
+          <button class="ftab active" onclick="filterTable('all',this)">All</button>
+          <button class="ftab" onclick="filterTable('at-risk',this)">At Risk</button>
+          <button class="ftab" onclick="filterTable('on-track',this)">On Track</button>
+        </div>
+      </div>
+      <table id="client-table">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Current Stage</th>
+            <th>Owner</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Risk</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+
+    <!-- AUTOMATION -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-header-title">Automation Opportunities</div>
+          <div class="card-header-sub">Workflow efficiency improvements</div>
+        </div>
+      </div>
+      <div class="auto-list">
+        <div class="auto-item">
+          <div class="auto-icon teal">📧</div>
+          <div>
+            <div class="auto-name">Automated Welcome Emails</div>
+            <div class="auto-desc">Trigger personalized welcome sequence on contract signature via CRM workflow.</div>
+            <span class="auto-tag active">Active</span>
+          </div>
+        </div>
+        <div class="auto-item">
+          <div class="auto-icon blue">📬</div>
+          <div>
+            <div class="auto-name">Intake Form Routing</div>
+            <div class="auto-desc">Auto-route completed intake forms to the assigned ops team member and shared drive.</div>
+            <span class="auto-tag active">Active</span>
+          </div>
+        </div>
+        <div class="auto-item">
+          <div class="auto-icon green">✅</div>
+          <div>
+            <div class="auto-name">Auto-Created Onboarding Tasks</div>
+            <div class="auto-desc">Generate stage-specific task lists in PM tool when a client moves to a new pipeline stage.</div>
+            <span class="auto-tag planned">In Progress</span>
+          </div>
+        </div>
+        <div class="auto-item">
+          <div class="auto-icon amber">🔔</div>
+          <div>
+            <div class="auto-name">30-Day Review Reminders</div>
+            <div class="auto-desc">Schedule automated Slack + email reminders to CSMs 5 days before 30-day review date.</div>
+            <span class="auto-tag proposed">Proposed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /two-col -->
+
+  <!-- SOP SECTION -->
+  <div class="section-eyebrow">Process Documentation</div>
+  <p class="section-sub" style="margin-top:-8px">SOP — Client Onboarding Standard Operating Procedure · v2.4 · Owner: Operations Team</p>
+  <div class="sop-wrap">
+    <div class="sop-header">
+      <div>
+        <div class="sop-header-title">Client Onboarding SOP Checklist</div>
+        <div class="sop-header-meta">Click any item to mark complete · Progress tracked in real time</div>
+      </div>
+      <div class="sop-version">v2.4</div>
+    </div>
+    <div class="sop-columns" id="sop-columns"></div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <strong>Portfolio project created by Tamara Mayes</strong> &nbsp;|&nbsp; Operations, Documentation &amp; Process Improvement
+</footer>
+
+<script>
+  /* ── LIVE DATE ─────────────────────────────────────────── */
+  document.getElementById('live-date').textContent =
+    new Date().toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+
+  /* ── CLIENT DATA ───────────────────────────────────────── */
+  const clients = [
+    { name:'Meridian Health Group',   stage:'Digital Intake',       owner:'Jordan T.',  due:'Jun 18, 2026', status:'on-track', risk:'low'  },
+    { name:'BlueSky Logistics',       stage:'Internal Setup',       owner:'Priya N.',   due:'Jun 20, 2026', status:'on-track', risk:'low'  },
+    { name:'Hartwell & Associates',   stage:'Kickoff Call',         owner:'Marcus L.',  due:'Jun 14, 2026', status:'delayed',  risk:'high' },
+    { name:'Coastal Realty Partners', stage:'Contract Signed',      owner:'Jordan T.',  due:'Jun 25, 2026', status:'on-track', risk:'low'  },
+    { name:'Veritas Technologies',    stage:'Training & Support',   owner:'Priya N.',   due:'Jun 22, 2026', status:'at-risk',  risk:'med'  },
+    { name:'Summit Financial',        stage:'30-Day Success Review',owner:'Marcus L.',  due:'Jun 30, 2026', status:'on-track', risk:'low'  },
+    { name:'Elevate Marketing Co.',   stage:'Digital Intake',       owner:'Jordan T.',  due:'Jun 16, 2026', status:'delayed',  risk:'high' },
+    { name:'NovaBridge Consulting',   stage:'Internal Setup',       owner:'Priya N.',   due:'Jun 24, 2026', status:'at-risk',  risk:'med'  },
+  ];
+
+  const stagePillClass = s => {
+    if (s.includes('Review') || s.includes('Training')) return 'green';
+    if (s.includes('Kickoff') || s.includes('Setup'))   return 'amber';
+    return 'navy';
+  };
+  const statusConfig = {
+    'on-track':{ dot:'green', label:'On Track' },
+    'at-risk':{ dot:'amber', label:'At Risk'   },
+    'delayed':{ dot:'red',   label:'Delayed'   },
+  };
+
+  function renderTable(filter) {
+    const tbody = document.getElementById('table-body');
+    const rows = filter === 'all' ? clients
+      : filter === 'at-risk' ? clients.filter(c => c.status !== 'on-track')
+      : clients.filter(c => c.status === 'on-track');
+
+    tbody.innerHTML = rows.map(c => {
+      const sc = statusConfig[c.status];
+      return `<tr data-status="${c.status}">
+        <td><div class="client-name">${c.name}</div></td>
+        <td><span class="stage-pill ${stagePillClass(c.stage)}">${c.stage}</span></td>
+        <td>${c.owner}</td>
+        <td style="color:var(--muted);font-size:12px">${c.due}</td>
+        <td><span class="status-dot"><span class="dot ${sc.dot}"></span>${sc.label}</span></td>
+        <td><span class="risk-badge ${c.risk}">${c.risk.toUpperCase()}</span></td>
+      </tr>`;
+    }).join('');
+  }
+
+  function filterTable(type, btn) {
+    document.querySelectorAll('.ftab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTable(type);
+  }
+
+  renderTable('all');
+
+  /* ── SOP DATA ──────────────────────────────────────────── */
+  const sopData = [
+    {
+      phase: 'Pre-Onboarding',
+      steps: [
+        { text: 'Send and collect signed contract', owner: 'Sales' },
+        { text: 'Create client folder in shared drive', owner: 'Ops' },
+        { text: 'Send automated welcome email', owner: 'CRM' },
+        { text: 'Assign dedicated CSM to account', owner: 'Manager' },
+        { text: 'Distribute digital intake form', owner: 'Ops' },
+      ]
+    },
+    {
+      phase: 'Active Setup',
+      steps: [
+        { text: 'Review completed intake form', owner: 'CSM' },
+        { text: 'Configure internal systems & access', owner: 'IT/Ops' },
+        { text: 'Create onboarding task checklist in PM tool', owner: 'Ops' },
+        { text: 'Schedule and confirm kickoff call', owner: 'CSM' },
+        { text: 'Deliver kickoff agenda 48 hrs in advance', owner: 'CSM' },
+      ]
+    },
+    {
+      phase: 'Launch & Review',
+      steps: [
+        { text: 'Conduct kickoff call & record notes', owner: 'CSM' },
+        { text: 'Complete training sessions (1–3 sessions)', owner: 'Trainer' },
+        { text: 'Send post-training resource packet', owner: 'Ops' },
+        { text: 'Set 30-day check-in reminder', owner: 'CRM' },
+        { text: 'Conduct 30-Day Success Review & close ticket', owner: 'CSM' },
+      ]
+    }
+  ];
+
+  const sopEl = document.getElementById('sop-columns');
+  sopEl.innerHTML = sopData.map((col, ci) => `
+    <div class="sop-col">
+      <div class="sop-col-title">${col.phase}</div>
+      <ul class="sop-steps">
+        ${col.steps.map((s, si) => {
+          const id = `sop-${ci}-${si}`;
+          return `<li class="sop-step">
+            <div class="sop-check" id="${id}" onclick="toggleStep('${id}')"></div>
+            <div>
+              <div class="sop-step-text" id="txt-${id}">${s.text}</div>
+              <div class="sop-step-owner">Owner: ${s.owner}</div>
+            </div>
+          </li>`;
+        }).join('')}
+      </ul>
+    </div>
+  `).join('');
+
+  function toggleStep(id) {
+    const box = document.getElementById(id);
+    const txt = document.getElementById('txt-' + id);
+    const checked = box.classList.toggle('checked');
+    box.textContent = checked ? '✓' : '';
+    txt.classList.toggle('done', checked);
+  }
+</script>
+</body>
+</html>
